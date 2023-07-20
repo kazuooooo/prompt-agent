@@ -1,10 +1,10 @@
-import openai
+from agents.prompt_agent import fix_prompt
 
-# create a chat completion
-chat_completion = openai.ChatCompletion.create(
-  model="gpt-3.5-turbo",
-  messages=[{"role": "user", "content": "Hello world"}
-])
+current_prompt = "こんにちは"
+improvments = ['足し算をするようにお願いしましょう']
 
-# print the chat completion
-print(chat_completion.choices[0].message.content)
+fixed_prompt = fix_prompt(
+  current_prompt=current_prompt,
+  improvements=improvments
+)
+print("fixed_prompt", fixed_prompt)
