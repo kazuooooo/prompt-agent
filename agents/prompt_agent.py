@@ -31,8 +31,6 @@ def fix_prompt(
   ```
   """
 
-  print("agent_prompt", agent_prompt)
-
   response = openai.ChatCompletion.create( #type: ignore
     model="gpt-4-0613",
     messages=[{"role": "system", "content": agent_prompt }],
