@@ -6,12 +6,10 @@ def fix_prompt(
   improvements: list[str],
 ) -> str:
   """
-  Given a prompt, a response, and a desired response, return a new prompt
+  Fix prompt based on improvements.
 
   Paramters:
     current_prompt(str)
-    current_response(str)
-    desired_response(str)
     improvements(list): list of improvements suggested by evaluation_agent
   
   Returns:
@@ -57,5 +55,5 @@ def fix_prompt(
   )
 
   response_message = response["choices"][0]["message"] #type: ignore
-  function_args = json.loads(response_message["function_call"]["arguments"])
+  function_args = json.loads(response_message["function_call"]["arguments"]) #type: ignore
   return function_args['fixed_prompt']
