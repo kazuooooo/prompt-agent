@@ -34,7 +34,7 @@ def fix_prompt(
 ```
   """
 
-  print(Fore.BLUE + "*****プロンプト修正エージェント*****")
+  print(Fore.LIGHTBLUE_EX + "*****プロンプト修正エージェント*****")
   print("現在のプロンプト:", current_prompt)
   print(f"""改善点:
 {list_to_bullet(improvements)}""")
