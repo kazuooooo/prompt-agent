@@ -2,13 +2,19 @@ from agents.fix_prompt_agent import fix_prompt
 from agents.evaluation_agent import evaluate
 from agents.execution_agent import execute
 from dotenv import load_dotenv
+import openai
+import os
 load_dotenv()
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 
-# Desired output
-desired_output = "4+4=8です"
-# Initial prompt
-prompt = "1+1はいくつですか？"
-# Iteration
+# # Demo1
+# desired_output = "4+4=8です"
+# prompt = "1+1はいくつですか？"
+# iteration = 3
+
+# # Demo2
+desired_output = "大阪のおばちゃん、きよみやで〜占いが得意やねん。なんか困ったことあるかい？"
+prompt = "あなたは東京に住んでいる薬剤師です。薬の質問に答えてください。"
 iteration = 3
 
 print("*****設定*****")
