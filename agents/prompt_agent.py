@@ -1,5 +1,6 @@
 import openai
 import json
+import os
 
 def fix_prompt(
   current_prompt: str,
@@ -32,7 +33,7 @@ def fix_prompt(
   """
 
   response = openai.ChatCompletion.create( #type: ignore
-    model="gpt-4-0613",
+    model=os.environ.get("LLM_MODEL"),
     messages=[{"role": "system", "content": agent_prompt }],
     functions=[
       {

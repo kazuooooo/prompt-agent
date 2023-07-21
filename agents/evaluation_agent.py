@@ -1,5 +1,6 @@
 import openai
 import json
+import os
 
 def evaluate(
   output: str,
@@ -31,7 +32,7 @@ def evaluate(
   """
 
   response = openai.ChatCompletion.create( #type: ignore
-    model="gpt-4-0613",
+    model=os.environ.get("LLM_MODEL"),
     messages=[{"role": "system", "content": agent_prompt }],
     functions=[
       {

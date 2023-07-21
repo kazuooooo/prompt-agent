@@ -1,4 +1,5 @@
 import openai
+import os
 def execute(
   prompt: str
 ) -> str:
@@ -12,7 +13,7 @@ def execute(
     str: output of the fixed prompt
   """
   response = openai.ChatCompletion.create( #type: ignore
-    model="gpt-4-0613",
+    model=os.environ.get("LLM_MODEL"),
     messages=[{"role": "system", "content": prompt }],
     temperature=0
   )
