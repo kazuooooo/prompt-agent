@@ -1,6 +1,8 @@
 import openai
 import json
 import os
+from agents.helpers.list_to_bullet import list_to_bullet
+from colorama import Fore, Style
 
 def fix_prompt(
   current_prompt: str,
@@ -18,19 +20,24 @@ def fix_prompt(
   """
 
   agent_prompt: str = f"""
-  あなたはプロンプトエンジニアです。
-  このプロンプトを改善点に基づいて、修正してください。
+あなたはプロンプトエンジニアです。
+このプロンプトを改善点に基づいて、修正してください。
 
-  プロンプト
-  ```
-  {current_prompt}
-  ```
+プロンプト
+```
+{current_prompt}
+```
 
-  改善点
-  ```
-  {improvements}
-  ```
+改善点
+```
+{list_to_bullet(improvements)}
+```
   """
+
+  print(Fore.BLUE + "*****プロンプト修正エージェント*****")
+  print("現在のプロンプト:", current_prompt)
+  print(f"""改善点:
+{list_to_bullet(improvements)}""")
 
   response = openai.ChatCompletion.create( #type: ignore
     model=os.environ.get("LLM_MODEL"),
@@ -55,4 +62,8 @@ def fix_prompt(
 
   response_message = response["choices"][0]["message"] #type: ignore
   function_args = json.loads(response_message["function_call"]["arguments"]) #type: ignore
-  return function_args['fixed_prompt']
+  fixed_prompt = function_args['fixed_prompt']
+  print("↓\n修正されたプロンプト:", fixed_prompt, "\n")
+  print(Style.RESET_ALL)
+
+  return fixed_prompt

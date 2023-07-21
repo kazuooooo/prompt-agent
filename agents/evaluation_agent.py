@@ -1,6 +1,9 @@
 import openai
 import json
 import os
+from colorama import Fore, Style
+from agents.helpers.list_to_bullet import list_to_bullet
+
 
 def evaluate(
   output: str,
@@ -31,6 +34,10 @@ def evaluate(
   ```
   """
 
+  print(Fore.GREEN + "*****評価エージェント*****")
+  print("出力:", output)
+  print("理想の出力:", desired_output)
+
   response = openai.ChatCompletion.create( #type: ignore
     model=os.environ.get("LLM_MODEL"),
     messages=[{"role": "system", "content": agent_prompt }],
@@ -57,4 +64,10 @@ def evaluate(
 
   response_message = response["choices"][0]["message"] #type: ignore
   function_args = json.loads(response_message["function_call"]["arguments"]) #type: ignore
-  return function_args["improvements"]
+  improvements = function_args["improvements"]
+  print(f"""↓
+改善点:
+{list_to_bullet(improvements)}
+""")
+  print(Style.RESET_ALL)
+  return improvements

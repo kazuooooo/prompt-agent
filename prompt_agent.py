@@ -1,16 +1,27 @@
-from agents.prompt_agent import fix_prompt
+from agents.fix_prompt_agent import fix_prompt
 from agents.evaluation_agent import evaluate
 from agents.execution_agent import execute
+from dotenv import load_dotenv
+load_dotenv()
 
-desired_output = "こんにちは〜大阪のおばちゃん清美やでーおばちゃん占い師やねん。なんでも聞いておくれやー"
-prompt = "こんにちは"
+# Desired output
+desired_output = "4+4=8です"
+# Initial prompt
+prompt = "1+1はいくつですか？"
+# Iteration
+iteration = 3
 
-for i in range(5):
+print("*****設定*****")
+print("理想の出力:", desired_output)
+print("初期プロンプト:", prompt)
+print("イテレーション:", iteration, "\n")
+
+
+for i in range(iteration):
   output = execute(prompt)
-  print("output", output)
-
   improvments = evaluate(output, desired_output)
-  print("improvements", improvments)
-
   prompt = fix_prompt(prompt, improvments)
-  print("fixed_prompts", prompt)
+
+print("*****最終結果*****")
+print("プロンプト:", prompt) #type: ignore
+print("出力:", output) #type: ignore
